@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 06, 2026 at 10:52 AM
+-- Generation Time: Jan 06, 2026 at 06:51 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -157,7 +157,7 @@ CREATE TABLE `notices` (
 
 INSERT INTO `notices` (`notice_id`, `title`, `content`, `category_id`, `priority`, `user_id`, `expiry_date`, `views`, `created_at`, `category`, `date`, `details`, `notice_date`) VALUES
 (13, 'NO WATER', 'NO WATER FOR UP TO 3 DAYS STARTING TOMORROW ', NULL, 'High', 6, NULL, 7, '2026-01-05 18:24:21', 'Maintenance', NULL, NULL, '2026-01-05'),
-(20, 'LIFT OUT OF ORDER', 'LIFT IS NOT WORKING FOR A UNKNOWN PERIOD OF TIME ', NULL, 'High', NULL, NULL, 0, '2026-01-06 08:53:44', 'Maintenance', NULL, NULL, '2026-01-15');
+(21, 'REPAIRS', 'POWER WILL BE OUT FOR A BIT', NULL, 'High', NULL, NULL, 0, '2026-01-06 14:08:17', 'Maintenance', NULL, NULL, '2026-01-06');
 
 -- --------------------------------------------------------
 
@@ -192,7 +192,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`setting_id`, `setting_key`, `setting_name`, `setting_value`, `description`) VALUES
-(1, 'banner_text', NULL, 'system downtime 12am', NULL),
+(1, 'banner_text', NULL, 'beepboop', NULL),
 (2, 'banner_status', NULL, 'active', NULL);
 
 -- --------------------------------------------------------
@@ -234,7 +234,8 @@ INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `role`, `status
 (2, 'tt1mmy', 'ongt5335@gmail.com', '$2y$10$dWw5yZ0C37VbcVst0mkzLOCoybAj1jrVyC5j21DuU2Bd.IDouKonK', 'resident', 'active', '2026-01-04 19:40:48', 'B'),
 (6, 'TestAdmin1', 'shafiq@gmail.com', '$2y$10$wJsCPf0Qq0X58KMBxNOZ4OjvgUyD8KIp2ieGapIOTLR6xTPHqnBuW', 'admin', 'active', '2026-01-04 20:04:04', 'A'),
 (7, 'TestGuest1', 'timongxj@gmail.com', '$2y$10$zDWaau8kAgjrM2KE30wu5O85..7b1DoG24JZnB5dKDSVsjjwEdV3e', 'resident', 'active', '2026-01-04 20:31:07', 'A'),
-(8, 'TestGuest2', 'ongt5334@gmail.com', '$2y$10$IrOWtnQ7jqv9wWt.gXD77u.R0XFStCwaUpQ2wQqh1KaH3wmWXcTra', 'resident', 'active', '2026-01-05 16:49:05', 'A');
+(8, 'TestGuest2', 'ongt5334@gmail.com', '$2y$10$IrOWtnQ7jqv9wWt.gXD77u.R0XFStCwaUpQ2wQqh1KaH3wmWXcTra', 'resident', 'active', '2026-01-05 16:49:05', 'A'),
+(9, 'admin', '', '$2y$10$86pXv.9YwU.eQp2p.kG7u.zY7GqQG3g8/6K9J0X0yY7X0yY7X0yY7', 'admin', 'active', '2026-01-06 14:30:37', NULL);
 
 -- --------------------------------------------------------
 
@@ -378,13 +379,13 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `notices`
 --
 ALTER TABLE `notices`
-  MODIFY `notice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `notice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `notifications`
@@ -396,7 +397,7 @@ ALTER TABLE `notifications`
 -- AUTO_INCREMENT for table `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `support_tickets`
@@ -408,7 +409,7 @@ ALTER TABLE `support_tickets`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `user_notice_views`
