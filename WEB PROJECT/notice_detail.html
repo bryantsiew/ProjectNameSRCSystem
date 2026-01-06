@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Notice Details</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+<style>
+/* ===== KEEPING YOUR DESIGN EXACTLY ===== */
+:root {
+    --bg-gradient: linear-gradient(135deg, #dcf8c6 0%, #f0f2f5 100%);
+    --glass-bg: rgba(255,255,255,0.65);
+    --glass-sidebar: rgba(62,98,72,0.85);
+    --glass-border: 1px solid rgba(255,255,255,0.5);
+    --text-main:#111b21;
+    --accent:#3e6248;
+}
+body {
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background:var(--bg-gradient);
+    display:flex;
+    height:100vh;
+}
+.sidebar {
+    width:260px;
+    background:var(--glass-sidebar);
+    padding:20px 0;
+    color:white;
+}
+.menu-item {
+    padding:12px 24px;
+    color:white;
+    text-decoration:none;
+    display:block;
+}
+.main-content {
+    flex:1;
+    padding:40px;
+}
+.container {
+    max-width:800px;
+    margin:auto;
+}
+.card {
+    background:var(--glass-bg);
+    padding:30px;
+    border-radius:16px;
+}
+.tag {
+    background:#3e6248;
+    color:white;
+    padding:5px 12px;
+    border-radius:20px;
+}
+textarea {
+    width:100%;
+    min-height:100px;
+}
+button {
+    background:#2f5d3f;
+    color:white;
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+    <div style="padding:0 24px;font-weight:bold;">CNBS Portal</div>
+    <a href="landing_page.html" class="menu-item">← Back to Board</a>
+</div>
+
+<div class="main-content">
+<div class="container">
+
+    <!-- NOTICE -->
+    <div class="card">
+        <span class="tag" id="category"></span>
+        <span id="date" style="margin-left:10px;opacity:0.6"></span>
+
+        <h1 id="title"></h1>
+        <p id="content"></p>
+    </div>
+
+    <!-- COMMENTS -->
+    <h3>Resident Comments</h3>
+    <div id="comments"></div>
+
+    <form action="post_comment.php" method="POST">
+        <input type="hidden" name="notice_id" id="noticeId">
+        <textarea name="comment_text" placeholder="Write a comment..." required></textarea>
+        <br><br>
+        <button type="submit">POST COMMENT</button>
+    </form>
+
+</div>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const noticeId = params.get("id");
+
+if (!noticeId) {
+    alert("Notice not found");
+    window.location.href = "landing_page.php";
+}
+
+document.getElementById("noticeId").value = noticeId;
+
+fetch(`api/get_notice_detail.php?id=${noticeId}`)
+    .then(res => res.json())
+    .then(data => {
+        if (data.error) {
+            alert("Notice not found");
+            window.location.href = "landing_page.php";
+            return;
+        }
+
+        document.getElementById("title").innerText = data.title;
+        document.getElementById("content").innerText = data.content;
+        document.getElementById("category").innerText = data.category;
+        document.getElementById("date").innerText = "Posted on " + data.notice_date;
+    })
+    .catch(err => {
+        console.error(err);
+        alert("Failed to load notice");
+    });
+</script>
+
+
+</body>
+</html>
+
+
+
+
+

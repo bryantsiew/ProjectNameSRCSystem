@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Profile</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Shared CSS */
+        :root {
+            --bg-body: #f0f2f5; --bg-sidebar: #3e6248; --bg-header: #ffffff;
+            --bg-card: #ffffff; --text-main: #111b21; --text-muted: #667781;
+            --accent: #3e6248; --border: #e9edef; --input-bg: #f0f2f5;
+        }
+        body.dark-mode {
+            --bg-body: #111b21; --bg-sidebar: #202c33; --bg-header: #202c33;
+            --bg-card: #2a3942; --text-main: #e9edef; --text-muted: #8696a0;
+            --accent: #00a884; --border: #2a3942; --input-bg: #111b21;
+        }
+        * { box-sizing: border-box; transition: 0.3s; }
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background-color: var(--bg-body); color: var(--text-main); display: flex; height: 100vh; }
+        .sidebar { width: 260px; background-color: var(--bg-sidebar); display: flex; flex-direction: column; color: white; padding: 20px 0; }
+        .menu-item { padding: 12px 24px; display: flex; align-items: center; color: rgba(255,255,255,0.7); text-decoration: none; }
+        .menu-item:hover, .menu-item.active { background-color: rgba(255,255,255,0.1); color: white; border-left: 4px solid var(--accent); }
+        .main-content { flex: 1; display: flex; flex-direction: column; padding: 0; overflow-y: auto; }
+        .top-bar { height: 60px; background-color: var(--bg-header); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: flex-end; padding: 0 30px; }
+
+        .container { padding: 40px; max-width: 900px; margin: 0 auto; width: 100%; }
+        .profile-card { background-color: var(--bg-card); border-radius: 12px; padding: 40px; border: 1px solid var(--border); display: flex; gap: 40px; }
+        .avatar-section { text-align: center; width: 200px; }
+        .avatar-img { width: 150px; height: 150px; background: #ddd; border-radius: 12px; margin-bottom: 15px; object-fit: cover; }
+        .form-section { flex: 1; }
+        label { display: block; margin-top: 15px; font-size: 0.85em; color: var(--text-muted); font-weight: bold; }
+        input { width: 100%; padding: 12px; margin-top: 5px; background: var(--input-bg); border: 1px solid var(--border); color: var(--text-main); border-radius: 6px; }
+        .btn { background: var(--accent); color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 25px; }
+        .error { color: #ef5350; font-size: 0.8em; display: none; margin-top: 5px; }
+        .file-upload { font-size: 0.8em; margin-top: 5px; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div style="padding: 0 24px; font-weight: bold; margin-bottom:30px;"><i class="fas fa-building"></i> CNBS Portal</div>
+        <a href="landing_page.html" class="menu-item "><i class="fas fa-home"></i> Home</a>
+<a href="edit_profile.html" class="menu-item active "><i class="fas fa-user-cog"></i> Profile</a>
+        <a href="notices.html" class="menu-item"><i class="fas fa-list"></i> All Notices</a>
+ <a href="help.html" class="menu-item "><i class="fas fa-question-circle"></i> Help & Support</a>
+        <div style="flex-grow: 1;"></div>
+        <a href="landing_page.html" class="menu-item"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
+
+    <div class="main-content">
+        <div class="top-bar">
+            <div style="font-weight: bold;">Hello, [PHP_USER]</div>
+        </div>
+
+        <div class="container">
+            <h2 style="margin-top: 0;">Manage Your Profile</h2>
+            
+            <div class="profile-card">
+                <form action="update_profile.php" method="POST" onsubmit="return validateForm()" enctype="multipart/form-data" style="display:flex; width:100%; gap:40px;">
+                    
+                    <div class="avatar-section">
+                        <img src="[PHP_USER_PHOTO_URL]" class="avatar-img">
+                        <label for="p_pic" class="btn" style="width:100%; padding: 8px; font-size: 0.9em; background: #555; display:block; margin-top:0;">Change Photo</label>
+                        <input type="file" name="profile_pic" id="p_pic" style="display:none;" onchange="alert('Photo selected')">
+                    </div>
+                    
+                    <div class="form-section">
+                            <label>New Username (Optional)</label>
+                            <input type="text" name="new_username" placeholder="Leave empty to keep current">
+
+                            <label>New Password (Optional)</label>
+                            <input type="password" name="new_pass" id="p1" placeholder="Leave empty to keep current">
+                            
+                            <label>Confirm New Password</label>
+                            <input type="password" id="p2" placeholder="Repeat new password">
+                            <span id="matchError" class="error">Passwords do not match!</span>
+
+                            <hr style="border-color: var(--border); margin: 30px 0; opacity: 0.5;">
+                            
+                            <label style="color: #ef5350;">🔒 Verify Current Password (Required)</label>
+                            <input type="password" name="current_pass" required placeholder="Enter current password to save changes">
+
+                            <button type="submit" class="btn">Update Profile</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function validateForm() {
+            var p1 = document.getElementById("p1").value;
+            var p2 = document.getElementById("p2").value;
+            if (p1 != "" && p1 != p2) {
+                document.getElementById("matchError").style.display = "block";
+                return false;
+            }
+            return true;
+        }
+        if(localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-mode');
+    </script>
+</body>
+</html>
